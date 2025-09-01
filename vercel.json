@@ -3,7 +3,7 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/build",
   "env": {
-    "REACT_APP_API_URL": "https://mern-collaboration-backend.onrender.com"
+    "REACT_APP_API_URL": "https://uniflow-wfpb.onrender.com"
   },
   "rewrites": [
     {

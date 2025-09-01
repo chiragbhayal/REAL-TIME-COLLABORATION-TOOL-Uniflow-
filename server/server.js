@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: process.env.NODE_ENV === 'production' 
-      ? [process.env.FRONTEND_URL, "https://mern-collaboration-frontend.onrender.com"]
+      ? ["https://uniflow-phuzvr5dt-bhayal07s-projects.vercel.app", "https://uniflow-wfpb.onrender.com"]
       : ["http://localhost:3000", "http://localhost:3001"],
     methods: ["GET", "POST"],
     credentials: true
@@ -20,7 +20,13 @@ const io = socketIo(server, {
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? ["https://uniflow-phuzvr5dt-bhayal07s-projects.vercel.app", "https://uniflow-wfpb.onrender.com"]
+    : ["http://localhost:3000", "http://localhost:3001"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB connection

@@ -5,7 +5,7 @@
   "main": "public/electron.js",
   "homepage": "./",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "cd server && npm start",
     "server": "cd server && npm start",
     "client": "cd client && npm start",
     "desktop": "node desktop-launcher.js",
@@ -13,7 +13,8 @@
     "electron-dev": "ELECTRON_IS_DEV=1 electron .",
     "electron-pack": "electron-builder",
     "build": "cd client && npm run build",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": ["collaboration", "real-time", "websocket", "mern", "electron"],
   "author": "MERN Collaboration Tool",

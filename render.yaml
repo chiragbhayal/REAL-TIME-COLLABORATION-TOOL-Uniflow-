@@ -12,7 +12,9 @@ services:
       - key: PORT
         value: 10000
       - key: MONGODB_URI
-        value: mongodb+srv://chiragbhayal7_db_user:YOUR_PASSWORD@uniflow.tylnp43.mongodb.net/collaboration-tool?retryWrites=true&w=majority&appName=UniflownString
+        value: mongodb+srv://chiragbhayal7_db_user:YOUR_PASSWORD@uniflow.tylnp43.mongodb.net/collaboration-tool?retryWrites=true&w=majority&appName=Uniflow
+      - key: FRONTEND_URL
+        value: https://uniflow-phuzvr5dt-bhayal07s-projects.vercel.appnString
     
   # Frontend Static Site
   - type: web

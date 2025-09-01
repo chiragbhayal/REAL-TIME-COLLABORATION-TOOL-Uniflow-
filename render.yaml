@@ -1,0 +1,36 @@
+services:
+  # Backend API Service
+  - type: web
+    name: mern-collaboration-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb-atlas
+          property: connectionString
+    
+  # Frontend Static Site
+  - type: web
+    name: mern-collaboration-frontend
+    env: static
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          type: web
+          name: mern-collaboration-backend
+          property: host
+
+databases:
+  - name: mongodb-atlas
+    databaseName: collaboration-tool
+    user: chiragbhayal7_db_user

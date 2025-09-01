@@ -1,4 +1,4 @@
-# 🚀 Render Deployment Guide
+# 🚀 Deployment Guide - Render + Vercel
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@
 
 ## Deployment Steps
 
-### 1. Deploy Backend (Web Service)
+### 1. Deploy Backend to Render (Web Service)
 
 1. Go to [Render Dashboard](https://dashboard.render.com)
 2. Click "New +" → "Web Service"
@@ -27,24 +27,35 @@
 5. Add Environment Variables:
    - `NODE_ENV` = `production`
    - `PORT` = `10000`
-   - `MONGODB_URI` = `your-mongodb-connection-string`
-   - `FRONTEND_URL` = `https://your-frontend-url.onrender.com`
+   - `MONGODB_URI` = `mongodb+srv://chiragbhayal7_db_user:YOUR_PASSWORD@uniflow.tylnp43.mongodb.net/collaboration-tool?retryWrites=true&w=majority&appName=Uniflow`
+   - `FRONTEND_URL` = `https://your-vercel-app.vercel.app`
 
-### 2. Deploy Frontend (Static Site)
+### 2. Deploy Frontend to Vercel
 
-1. Click "New +" → "Static Site"
-2. Connect the same GitHub repository
-3. Configure the site:
-   - **Name**: `mern-collaboration-frontend`
-   - **Build Command**: `cd client && npm install && npm run build`
-   - **Publish Directory**: `client/build`
+#### Option A: Vercel CLI (Recommended)
+1. Install Vercel CLI: `npm install -g vercel`
+2. Login: `vercel login`
+3. Deploy: `vercel --prod`
 
-4. Add Environment Variable:
-   - `REACT_APP_API_URL` = `https://your-backend-url.onrender.com`
+#### Option B: Vercel Dashboard
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+2. Click "New Project"
+3. Import your GitHub repository
+4. Configure:
+   - **Framework Preset**: Create React App
+   - **Root Directory**: `client`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `build`
 
-### 3. Update CORS Configuration
+5. Add Environment Variable:
+   - `REACT_APP_API_URL` = `https://your-render-backend.onrender.com`
 
-After deployment, update the backend's CORS settings with your actual frontend URL.
+### 3. Alternative: Blueprint Deployment
+
+If using render.yaml (Backend only):
+1. Place `render.yaml` in your repository root
+2. Update the MongoDB URI with your actual password
+3. Deploy via "New +" → "Blueprint" → Connect repository
 
 ## Environment Variables Reference
 
@@ -53,13 +64,28 @@ After deployment, update the backend's CORS settings with your actual frontend U
 MONGODB_URI=mongodb+srv://chiragbhayal7_db_user:YOUR_ACTUAL_PASSWORD@uniflow.tylnp43.mongodb.net/collaboration-tool?retryWrites=true&w=majority&appName=Uniflow
 PORT=10000
 NODE_ENV=production
-FRONTEND_URL=https://your-frontend-url.onrender.com
+FRONTEND_URL=https://your-vercel-app.vercel.app
 ```
 
-### Frontend (Render Environment)
+### Frontend (Vercel Environment)
 ```
-REACT_APP_API_URL=https://your-backend-url.onrender.com
+REACT_APP_API_URL=https://your-render-backend.onrender.com
 ```
+
+## Deployment Architecture
+
+- **Backend**: Render Web Service (Node.js + Socket.IO)
+- **Frontend**: Vercel Static Site (React build)
+- **Database**: MongoDB Atlas (cloud-hosted)
+- **No Docker**: Native runtime deployments
+
+## Vercel Configuration
+
+The `vercel.json` file is configured for:
+- React app build from `client` directory
+- Environment variables for API URL
+- SPA routing support with rewrites
+- Automatic deployments from GitHub
 
 ## Post-Deployment
 
@@ -71,10 +97,11 @@ REACT_APP_API_URL=https://your-backend-url.onrender.com
 ## Troubleshooting
 
 - **MongoDB Connection**: Ensure the password is correct and IP whitelist includes 0.0.0.0/0
-- **CORS Issues**: Verify frontend URL is added to backend CORS configuration
-- **WebSocket**: Render supports WebSocket connections on free tier
+- **CORS Issues**: Verify Vercel URL is added to backend CORS configuration
+- **WebSocket**: Both Render and Vercel support WebSocket connections
 - **Build Failures**: Check build logs and ensure all dependencies are in package.json
+- **Environment Variables**: Ensure API URLs match between services
 
 Your collaboration tool will be accessible at:
-- **Frontend**: `https://your-frontend-name.onrender.com`
-- **Backend API**: `https://your-backend-name.onrender.com`
+- **Frontend**: `https://your-project.vercel.app`
+- **Backend API**: `https://your-backend.onrender.com`

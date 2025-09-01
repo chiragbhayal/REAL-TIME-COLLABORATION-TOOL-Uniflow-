@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "mern-collaboration-frontend",
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/client/build/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://mern-collaboration-backend.onrender.com"
+  }
+}
